@@ -2,19 +2,24 @@ package com.teamtreehouse.testingbase;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 /**
  * Created by ${farhanarnob} on ${06-Oct-16}.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class MainActivityPresenterTest {
     MainActivityPresenter mainActivityPresenter;
-    MockView mockView;
+
+    @Mock
+    MainActivityView mockView;
 
     @Before
     public void setUp() throws Exception {
-        mockView = new MockView();
+
         mainActivityPresenter = new MainActivityPresenter(mockView);
 
     }
@@ -29,8 +34,8 @@ public class MainActivityPresenterTest {
         mainActivityPresenter.editTextUpdated(givenText);
 
         // Assert
+        Mockito.verify(mockView).changTextViewText(givenText);
 
-        assertEquals(givenText, mockView.textViewText);
     }
 
     @Test
@@ -43,24 +48,6 @@ public class MainActivityPresenterTest {
 
     }
 
-    private class MockView implements MainActivityView {
 
-        String textViewText;
-
-        @Override
-        public void changTextViewText(String text) {
-            textViewText = text;
-        }
-
-        @Override
-        public void changeBackgroundColor(int color) {
-
-        }
-
-        @Override
-        public void launchOtherActivity(Class activity) {
-
-        }
-    }
 
 }
